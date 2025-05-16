@@ -1,0 +1,28 @@
+pipeline{
+    agent any
+    stages {
+        stage('checkout'){
+            steps{
+                sh 'echo "Checking out the code"'
+                git url: 'https://github.com/Manikandan2907/Java_app_3.0.git', branch: 'main'
+            }
+        }
+        stage('Test'){
+            when {
+                branch 'main'
+            }
+            steps{
+                sh 'echo "Testing the code"'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy'){
+            steps{
+                sh 'echo "Copying the codes after building them"'
+                sh 'scp -pr manikandan@my-server:/var/lib/jenkins/workspace manikandan@dest-server:/src/code'
+            }
+        }
+
+    }    
+    
+}   

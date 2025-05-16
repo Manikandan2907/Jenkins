@@ -1,0 +1,23 @@
+pipeline{
+    parameters {
+        string(name: 'Greeting') 
+    }
+    environment {
+        NAME = "Mani"
+
+    }
+    stages{
+        stage('Checkout'){
+            steps{
+                sh 'echo "Checking out the code"'
+                git url: 'https://github.com/Manikandan2907/Java_app_3.0.git', branch: 'main' 
+            }
+        }
+        stage('Test'){
+            steps {
+                sh 'echo "${params.Greeting}, I am ${env.NAME}"'
+                sh 'mvn test'
+            }
+        }
+    }
+}

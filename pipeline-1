@@ -1,0 +1,38 @@
+pipeline{
+    agent any
+    parameters{
+        string(name: 'GREETING', defalutValue: 'Hi', description: 'Pass the greetings message here')
+    }
+    environment {
+        NAME = "MANI"
+    }
+
+    stages{
+        stage('Checkout'){
+            steps{
+                sh 'echo "Code checkout started"'
+                git url: 'https://github.com/Manikandan2907/Java_app_3.0.git', branch: 'main'  
+            }
+        }
+        stage('Build'){
+            steps{
+                sh 'mvn clean install -DskipTests'
+            }
+        }
+        stage('Test'){
+                when {
+                    branch 'main'
+                }
+                steps{
+                    sh 'echo "${params.GREETING}, I am ${env.name}"'
+                    sh 'mvn test'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            sh 'echo "Rolling up the Pipeline"'
+        }
+    }
+}
