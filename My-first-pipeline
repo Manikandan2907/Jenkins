@@ -4,7 +4,7 @@ pipeline{
         stage('checkout'){
             steps{
                 sh 'echo "Checking out the code"'
-                git url: 'https://github.com/Manikandan2907/Java_app_3.0.git', branch: 'main'
+                git url: 'https://github.com/Manikandan2907/CICD-1', branch: 'main'
             }
         }
         stage('Test'){
